@@ -2,6 +2,7 @@
 
 namespace Lexik\Bundle\JWTAuthenticationBundle\Tests\Functional;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Tests\Functional\Integration\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 

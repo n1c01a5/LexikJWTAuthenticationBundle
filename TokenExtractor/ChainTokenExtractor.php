@@ -31,9 +31,7 @@ class ChainTokenExtractor implements TokenExtractorInterface
      * Calls {@link TokenExtractorInterface::extract()} for each extractors by
      * iterating over until a token is found.
      *
-     * @param Request $request
-     *
-     * @return string|false The extracted token, false otherwise
+     * {@inheritdoc}
      */
     public function extract(Request $request)
     {

@@ -12,8 +12,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class JWTAuthenticationException extends AuthenticationException
 {
-    const CODE = 401;
-
     /**
      * Returns an AuthenticationException in case of invalid token.
      *
@@ -25,7 +23,7 @@ class JWTAuthenticationException extends AuthenticationException
      */
     public static function invalidToken(JWTDecodeFailureException $previous = null)
     {
-        return new static($previous ? $previous->getMessage() : 'Invalid JWT Token', self::CODE, $previous);
+        return new static($previous ? $previous->getMessage() : 'Invalid JWT Token', 0, $previous);
     }
 
     /**
@@ -37,7 +35,7 @@ class JWTAuthenticationException extends AuthenticationException
      */
     public static function tokenNotFound($message = 'JWT Token not found')
     {
-        return new static($message, self::CODE);
+        return new static($message);
     }
 
     /**
@@ -54,8 +52,7 @@ class JWTAuthenticationException extends AuthenticationException
     public static function invalidUser($identity, $identityField)
     {
         return new static(
-            sprintf('Unable to load a valid user with "%s" "%s". If the user identity has been changed, you must renew the token. Otherwise, verify that the "lexik_jwt_authentication.user_identity_field" config option is correctly set.', $identityField, $identity),
-            self::CODE
+            sprintf('Unable to load a valid user with "%s" "%s". If the user identity has been changed, you must renew the token. Otherwise, verify that the "lexik_jwt_authentication.user_identity_field" config option is correctly set.', $identityField, $identity)
         );
     }
 
@@ -70,6 +67,6 @@ class JWTAuthenticationException extends AuthenticationException
      */
     public static function invalidPayload($message = 'Invalid payload')
     {
-        return new static($message, self::CODE);
+        return new static($message);
     }
 }

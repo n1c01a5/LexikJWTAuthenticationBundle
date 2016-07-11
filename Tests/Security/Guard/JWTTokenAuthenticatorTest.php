@@ -48,27 +48,21 @@ class JWTTokenAuthenticatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCredentialsWithInvalidToken()
     {
-        $userIdentityField = 'username';
-        $payload           = [$userIdentityField => 'lexik'];
-
         (new JWTTokenAuthenticator(
             $this->getJWTManagerMock(),
             $this->getEventDispatcherMock(),
             $this->getTokenExtractorMock('token'),
-            $userIdentityField
+            'username'
         ))->getCredentials($this->getRequestMock());
     }
 
     public function testGetCredentialsWithoutToken()
     {
-        $userIdentityField = 'username';
-        $payload           = [$userIdentityField => 'lexik'];
-
         $authenticator = new JWTTokenAuthenticator(
             $this->getJWTManagerMock(),
             $this->getEventDispatcherMock(),
             $this->getTokenExtractorMock(false),
-            $userIdentityField
+            'username'
         );
 
         $this->assertNull($authenticator->getCredentials($this->getRequestMock()));
@@ -210,7 +204,6 @@ class JWTTokenAuthenticatorTest extends \PHPUnit_Framework_TestCase
         $request          = $this->getRequestMock();
         $authException    = JWTAuthenticationException::tokenNotFound();
         $failureResponse  = new JWTAuthenticationFailureResponse($authException->getMessage());
-        $event            = new JWTNotFoundEvent($request, $authException, $failureResponse);
 
         $dispatcher = $this->getEventDispatcherMock();
         $dispatcher
@@ -220,7 +213,6 @@ class JWTTokenAuthenticatorTest extends \PHPUnit_Framework_TestCase
                 Events::JWT_NOT_FOUND,
                 new JWTNotFoundEvent($request, $authException, $failureResponse)
             );
-
 
         $authenticator = new JWTTokenAuthenticator(
             $this->getJWTManagerMock(),

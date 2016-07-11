@@ -57,7 +57,7 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     private $userIdentityField;
 
     /**
-     * @param JWTEncoderInterface      $encoder
+     * @param JWTEncoderInterface      $jwtManager
      * @param EventDispatcherInterface $dispatcher
      * @param TokenExtractorInterface  $tokenExtractor
      * @param string                   $userIdentityField

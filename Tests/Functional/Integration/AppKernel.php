@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexik\Bundle\JWTAuthenticationBundle\Tests\Functional;
+namespace Lexik\Bundle\JWTAuthenticationBundle\Tests\Functional\Integration;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+            new \Lexik\Bundle\JWTAuthenticationBundle\Tests\Functional\Integration\AppBundle\AppBundle(),
         ];
     }
 
@@ -43,6 +44,6 @@ class AppKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        $loader->load(__DIR__.'/app/config/config.yml');
     }
 }

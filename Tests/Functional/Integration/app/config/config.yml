@@ -1,0 +1,45 @@
+framework:
+    secret: test
+    router:
+        resource: '%kernel.root_dir%/app/config/routing.yml'
+    test: ~
+    session: ~
+
+lexik_jwt_authentication:
+    private_key_path:   '%kernel.root_dir%/var/private.pem'
+    public_key_path:    '%kernel.root_dir%/var/public.pem'
+    pass_phrase:        testing
+
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    providers:
+        in_memory:
+            memory:
+                users:
+                    lexik:
+                        password: dummy
+                        roles: ROLE_USER
+
+    firewalls:
+        login:
+            pattern:  ^/login
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path: /login_check
+                require_previous_session: false
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:  ^/api
+            stateless: true
+            anonymous: false
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
